@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { setAlert } from '../../state/alert/alert.action'
 
 const Register = () => {
 
@@ -14,10 +16,12 @@ const Register = () => {
    ...formData,
    [e.target.name]: e.target.value
  })
+
+ const dispatch = useDispatch()
  const handleSubmit = (e) => {
    e.preventDefault()
    if(password !== password2){
-     console.log('password not match')
+    dispatch(setAlert('password do not match', 'danger'))
    } else{
      console.log(formData)
    }
