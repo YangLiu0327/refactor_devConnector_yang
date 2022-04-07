@@ -12,6 +12,7 @@ import { useDispatch } from 'react-redux'
 // using git via vs code
 // source control
 // + => commit => push
+// add new note
 const App = () => {
   const dispatch = useDispatch()
   useEffect(()=>{
