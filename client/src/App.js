@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useEffect } from 'react'
 import Navbar from './components/layout/Navbar'
 import Landing from './components/layout/Landing'
 import Register from './components/auth/Register'
@@ -6,8 +6,17 @@ import Login from './components/auth/Login'
 import Alert from './components/layout/Alert'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './App.css'
+import { loadUser } from './state/ auth/auth.action'
+import { useDispatch } from 'react-redux'
+
 
 const App = () => {
+  const dispatch = useDispatch()
+  useEffect(()=>{
+    dispatch(loadUser())
+    // only run once
+  },[])
+
   return(
     <Router>
     <Fragment>
