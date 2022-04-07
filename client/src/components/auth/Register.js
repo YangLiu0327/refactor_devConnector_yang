@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { setAlert } from '../../state/alert/alert.action'
+import { register } from '../../state/ auth/auth.action'
 
 const Register = () => {
 
@@ -23,7 +24,8 @@ const Register = () => {
    if(password !== password2){
     dispatch(setAlert('password do not match', 'danger'))
    } else{
-     console.log(formData)
+     // name, email, password come from formData
+     dispatch(register({name, email, password}))
    }
  }
 
