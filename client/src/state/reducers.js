@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux'
-import authReducer from './ auth/auth.reducer'
+import authReducer from './auth/auth.reducer'
 import alertReducer from './alert/alert.reducer'
 
 

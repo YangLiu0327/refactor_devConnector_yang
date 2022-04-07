@@ -6,9 +6,8 @@ import Login from './components/auth/Login'
 import Alert from './components/layout/Alert'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './App.css'
-import { loadUser } from './state/ auth/auth.action'
+import { loadUser } from './state/auth/auth.action'
 import { useDispatch } from 'react-redux'
-
 
 const App = () => {
   const dispatch = useDispatch()

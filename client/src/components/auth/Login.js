@@ -1,8 +1,13 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+import { login } from '../../state/auth/auth.action';
+
 
 const Login = () => {
-
+  const { isAuthenticated } = useSelector((state)=> ({
+    isAuthenticated: state.auth.isAuthenticated
+  }))
   const [formData, setFormData ] = useState({
     email: '',
     password: ''
@@ -14,11 +19,18 @@ const Login = () => {
     ...formData, 
     [e.target.name]: e.target.value
   });
-
+  const dispatch = useDispatch()
   const onSubmit = async e =>{
     e.preventDefault();
+    // email, password from fromData
+    // action 里面也要传入 email, password
+    dispatch(login({email, password}))
   }
- 
+  // redirect if login in
+  const navigate = useNavigate()
+  if(isAuthenticated){
+   navigate('/dashboard')
+  }
   return (
       <section className="container">
         <h1 className="large text-primary">Sign In</h1>

@@ -1,33 +1,40 @@
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { Link, useNavigate } from 'react-router-dom'
 import { setAlert } from '../../state/alert/alert.action'
-import { register } from '../../state/ auth/auth.action'
+import { register } from '../../state/auth/auth.action'
 
 const Register = () => {
+  const { isAuthenticated } = useSelector((state)=> ({
+    isAuthenticated: state.auth.isAuthenticated
+  }))
 
- const [formData, setFormData ] = useState({
-   name: '',
-   email: '',
-   password: '',
-   password2:''
- })
- const {name, email, password, password2} = formData
- const handleChange = (e) => setFormData({
-   ...formData,
-   [e.target.name]: e.target.value
- })
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    password: '',
+    password2: ''
+  })
+  const { name, email, password, password2 } = formData
+  const handleChange = (e) => setFormData({
+    ...formData,
+    [e.target.name]: e.target.value
+  })
 
- const dispatch = useDispatch()
- const handleSubmit = (e) => {
-   e.preventDefault()
-   if(password !== password2){
-    dispatch(setAlert('password do not match', 'danger'))
-   } else{
-     // name, email, password come from formData
-     dispatch(register({name, email, password}))
-   }
- }
+  const dispatch = useDispatch()
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    if (password !== password2) {
+      dispatch(setAlert('password do not match', 'danger'))
+    } else {
+      // name, email, password come from formData
+      dispatch(register({ name, email, password }))
+    }
+  }
+  const navigate = useNavigate()
+  if(isAuthenticated){
+   navigate('/dashboard')
+  }
 
   return (
     <section className="container">
