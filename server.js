@@ -1,11 +1,13 @@
 const express = require('express')
 const connectDB = require('./config/db');
-
+const cors = require('cors')
 const app = express();
 
 // Connect Database
 connectDB();
 
+// use core
+app.use(cors())
 // init middleware
 // get request from boby
 app.use(express.json({ extended: false }));

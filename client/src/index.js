@@ -7,7 +7,7 @@ import thunk from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
 import rootReducer from "./state/reducers";
 import App from './App';
-import setAuthToken from './state/utils/setAuthToken'
+import setAuthToken from './utils/setAuthToken'
 
 if(localStorage.token){
   setAuthToken(localStorage.token)

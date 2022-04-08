@@ -62,7 +62,7 @@ const Navbar = () => {
         <i className='fas fa-code'>
           DevConnector</i>
       </Link>
-        {!loading && (<>{isAuthenticated ? authLinks: guestLinks }</>)}
+        {!loading && (<>{isAuthenticated ?  authLinks : guestLinks}</>)}
     </nav>
   )
 }
