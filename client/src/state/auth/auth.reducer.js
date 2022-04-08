@@ -21,15 +21,15 @@ const authReducer = (state = initialState, action) =>{
       // login, register success  一样
     case 'REGISTER_SUCCESS':
     case 'LOGIN_SUCCESS':
-    case 'AUTH_ERROR':
       // console.log(action, "======")
-      localStorage.removeItem('token')
+      localStorage.setItem('token')
       return {
         ...state,
         ...action.data,
         isAuthenticated: true,
         loading: false
       }
+    case 'AUTH_ERROR':
     case 'REGISTER_FAIL':
     case 'LOGIN_FAIL':
     case 'LOGOUT':
