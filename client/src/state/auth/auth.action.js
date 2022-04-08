@@ -1,18 +1,18 @@
 import axios from 'axios'
-import { useDispatch } from 'react-redux'
 import { setAlert } from '../alert/alert.action'
-import setAuthToken from '../utils/setAuthToken'
+import setAuthToken from '../../utils/setAuthToken'
 // if have type file, import here
 
 
 // load user
 
 export const loadUser = () => async dispatch => {
+
   if(localStorage.token){
     setAuthToken(localStorage.token)
   }
   try{
-    const res = await axios.get('/api/auth')
+    const res = await axios.get('http://localhost:5000/api/auth')
     dispatch({
       type: 'USER_LOADED',
       data: res.data
@@ -27,7 +27,9 @@ export const loadUser = () => async dispatch => {
 export const register = ({name, email, password}) => async dispatch => {
   const config = {
     headers: {
-      'Content-Type':'application/json'
+      'Content-Type':'application/json',
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Credentials': true
     }
   }
   const body = JSON.stringify({name, email, password})
@@ -49,26 +51,61 @@ export const register = ({name, email, password}) => async dispatch => {
 }
 
 // login user
-export const login = ({ email, password}) => async dispatch => {
+// export const login = ({ email, password}) => async dispatch => {
+//   const config = {
+//     headers:{
+//       'Access-Control-Allow-Origin': '*',
+//       'Content-Type': 'application/json',
+//       'Access-Control-Allow-Credentials': true
+//     }
+//   }
+//   const body = JSON.stringify({ email, password})
+//   try{
+//     const res = await axios.post('/api/auth', body, config)
+//     dispatch({
+//       type:'LOGIN_SUCCESS',
+//       data: res.data
+//     })
+//   }catch(err){
+//     const errors = err.response.data.errors
+//     if(errors){
+//       errors.forEach(error => dispatch(setAlert(error.msg, 'danger')))
+//     }
+//     dispatch({
+//       tyepe:'LOGIN_FAIL'
+//     })
+//   }
+// }
+
+export const login = ({email, password}) => async dispatch => {
+  // sent data need config
   const config = {
     headers:{
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Credentials': true
     }
   }
-  const body = JSON.stringify({ email, password})
-  try{
-    const res = await axios.post('/api/auth', body, config)
+
+  const body = JSON.stringify({ email, password });
+
+  try {
+    const res = await axios.post('http://localhost:5000/api/auth', body, config);
+
     dispatch({
-      type:'LOGIN_SUCCESS',
+      type: 'LOGIN_SUCCESS',
       data: res.data
-    })
-  }catch(err){
-    const errors = err.response.data.errors
-    if(errors){
-      errors.forEach(error => dispatch(setAlert(error.msg, 'danger')))
+    });
+    dispatch(loadUser());
+  } catch (err) {
+    const errors = err.response.data.errors;
+
+    if(errors) {
+      errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
     }
+
     dispatch({
-      tyepe:'LOGIN_FAIL'
+      type: 'LOGIN_FAIL'
     })
   }
 }
